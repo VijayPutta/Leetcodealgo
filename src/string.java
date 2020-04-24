@@ -206,6 +206,7 @@ public class string {
 					return false;
 				};
 			}
+			System.out.println("hello");
 			return true;
 	}
 	
