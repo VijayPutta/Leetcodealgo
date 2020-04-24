@@ -10,8 +10,11 @@ public class string {
 		//DefrangingIpAddress();
 		//decNumbertoAplhabet();
 		//stringmatchinginarray();
-		convertRomantoInteger();
+		//convertRomantoInteger();
+		boolean status = detectCapitalworduse();
+		Stringutil.printStatus(status);
 	}
+	
 	/* brute force solution */
 	private static void DefrangingIpAddress() {
 		// TODO Auto-generated method stub
@@ -158,6 +161,36 @@ public class string {
 		        }else{
 			        System.out.println("Thanks");
 		        }
-		    }   
+		    }  
+	private static boolean detectCapitalworduse() {
+		// TODO Auto-generated method stub
+		String s = Stringutil.createString();
+		int length = s.length();
+		int flag = 0;
+		boolean _bool = false;
+		if(length == 1){
+            return true;
+        }
+		if(s.charAt(0) >='a' && s.charAt(0) <= 'z'){
+			flag = 1;
+		}
+		if(s.charAt(0) >='A' && s.charAt(0) <= 'Z'){
+			if(s.charAt(1) >='a' && s.charAt(1) <= 'z'){
+				flag = 2;
+			}else{
+				flag = 3;
+			}
+		}
+		System.out.println(flag);
+		for(int i=1;i<length;){
+			if((s.charAt(i) >='a' && s.charAt(i) <= 'z' && (flag == 1 || flag == 2)) || (s.charAt(i) >='A' && s.charAt(i) <= 'Z') && flag == 3){
+				i++;
+			}else{
+				return false;
+			}
+		}
+		return true;
+		
+	}
 	
 }

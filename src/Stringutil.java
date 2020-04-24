@@ -25,4 +25,7 @@ public class Stringutil {
 		n = sc.nextInt();
 		return n;
 	}
+	public static void printStatus(boolean status){
+		System.out.println(status);
+	}
 }
