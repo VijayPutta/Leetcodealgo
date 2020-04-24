@@ -111,7 +111,7 @@ public class string {
 		                } else if(c == 'I' && s.charAt(i+1) == 'V'){
 		                    total += 4;
 		                    i++;
-		                } else { //there are no matching pairs so just check value 
+		                } else { 
 		                    if(c == 'M'){
 		                        total += 1000;
 		                    } else if (c == 'D'){
