@@ -11,7 +11,9 @@ public class string {
 		//decNumbertoAplhabet();
 		//stringmatchinginarray();
 		//convertRomantoInteger();
-		boolean status = detectCapitalworduse();
+//		boolean status = detectCapitalworduse();
+//		Stringutil.printStatus(status);
+		boolean status = canconstructTheMagazine();
 		Stringutil.printStatus(status);
 	}
 	
@@ -191,6 +193,20 @@ public class string {
 		}
 		return true;
 		
+	}
+	private static boolean canconstructTheMagazine(){
+			String note = Stringutil.createString();
+			String magazine = Stringutil.createString();
+			int arr[] = new int[26];
+			for(int i=0;i<magazine.length();i++){
+				arr[magazine.charAt(i)-'a']++;
+			}
+			for(int i=0;i<note.length();i++){
+				if(arr[note.charAt(i)-'a']-- <= 0){
+					return false;
+				};
+			}
+			return true;
 	}
 	
 }
