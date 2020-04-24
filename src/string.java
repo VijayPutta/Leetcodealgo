@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 
@@ -8,7 +9,8 @@ public class string {
 		// TODO Auto-generated method stub
 		//DefrangingIpAddress();
 		//decNumbertoAplhabet();
-		stringmatchinginarray();
+		//stringmatchinginarray();
+		convertRomantoInteger();
 	}
 	/* brute force solution */
 	private static void DefrangingIpAddress() {
@@ -73,4 +75,89 @@ public class string {
 		}
 		System.out.println("hello");
 	}
+	private static void convertRomantoInteger(){
+		        // I = 1
+		        // V = 5
+		        // X = 10
+		        // L = 50
+		        // C = 100
+		        // D = 500
+		        // M = 1000
+		        
+		        int total = 0; //Keep track of the sum
+		        
+		        String s = Stringutil.createString();
+		        for(int i = 0; i <= s.length()-1; i++){
+		            char c = s.charAt(i); 
+		            
+		            
+		            
+		            if(i <= s.length()-2){ //See if we can check Pairs of symbols 
+		                if(c == 'C' && s.charAt(i+1) == 'M'){
+		                    total += 900;
+		                    i++; //Adding since we have cleared a pair of symbols 
+		                } else if(c == 'C' && s.charAt(i+1) == 'D'){
+		                    total += 400;
+		                     i++;
+		                } else if(c == 'X' && s.charAt(i+1) == 'C'){
+		                    total += 90;
+		                    i++;
+		                } else if(c == 'X' && s.charAt(i+1) == 'L'){
+		                    total += 40;
+		                    i++;
+		                } else if(c == 'I' && s.charAt(i+1) == 'X'){
+		                    total += 9;
+		                    i++;
+		                } else if(c == 'I' && s.charAt(i+1) == 'V'){
+		                    total += 4;
+		                    i++;
+		                } else { //there are no matching pairs so just check value 
+		                    if(c == 'M'){
+		                        total += 1000;
+		                    } else if (c == 'D'){
+		                        total += 500;
+		                    } else if (c == 'C'){
+		                        total += 100;
+		                    } else if (c == 'L'){
+		                        total += 50;
+		                    } else if (c == 'X'){
+		                        total += 10;
+		                    } else if (c == 'V'){
+		                        total += 5;
+		                    } else if (c == 'I'){
+		                        total++;
+		                    }
+		                }
+		            }
+		            
+		            
+		            
+		            else{ //If we are at the end of the string just check its value 
+		                if(c == 'M'){
+		                    total += 1000;
+		                } else if (c == 'D'){
+		                    total += 500;
+		                } else if (c == 'C'){
+		                    total += 100;
+		                } else if (c == 'L'){
+		                    total += 50;
+		                } else if (c == 'X'){
+		                    total += 10;
+		                } else if (c == 'V'){
+		                    total += 5;
+		                } else if (c == 'I'){
+		                    total++;
+		                }
+		            }  
+		        }
+		        System.out.println(total);
+		        System.out.println("want to try again if then press 1");
+		        int n = Stringutil.getNumber();
+		        if(n == 1){
+		        	convertRomantoInteger();
+		        }else{
+			        System.out.println("Thanks");
+		        }
+		    }   
+	
 }
