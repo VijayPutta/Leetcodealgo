@@ -12,11 +12,15 @@ public class string {
 		//stringmatchinginarray();
 		//convertRomantoInteger();
 //		boolean status = detectCapitalworduse();
+//		boolean status = canconstructTheMagazine();
+//		boolean status = continousAbsent();
 //		Stringutil.printStatus(status);
-		boolean status = canconstructTheMagazine();
-		Stringutil.printStatus(status);
+	//	addTwoString();
+		maximumscore();
 	}
 	
+	
+
 	/* brute force solution */
 	private static void DefrangingIpAddress() {
 		// TODO Auto-generated method stub
@@ -57,7 +61,6 @@ public class string {
 		}
 		sb.reverse();
 		System.out.println(sb.toString());
-
 	}
 	private static void stringmatchinginarray(){
 		int n = Stringutil.getNumber();
@@ -192,7 +195,6 @@ public class string {
 			}
 		}
 		return true;
-		
 	}
 	private static boolean canconstructTheMagazine(){
 			String note = Stringutil.createString();
@@ -208,6 +210,80 @@ public class string {
 			}
 			System.out.println("hello");
 			return true;
+	}
+	private static boolean continousAbsent(){
+		String student = Stringutil.createString();
+		int count =0;
+		for(int i=0;i<student.length();i++){ 
+			if(student.charAt(i)=='A'){
+				count ++;
+			}else if(i <= student.length()-3 && student.charAt(i) == 'L' && student.charAt(i+1) == 'L' &&student.charAt(i+2) == 'L'){
+				return false;
+			}
+		}
+		if(count == 2){
+			return false;
+		}
+		return true;
+	}
+	private static void addTwoString() {
+		// TODO Auto-generated method stub
+		String str = Stringutil.createString();
+		String addStr = Stringutil.createString();
+		int n =str.length(), m = addStr.length();
+		StringBuffer s = new StringBuffer();
+		n--;
+		m--;
+		int carry = 0,addition=0;
+		while(n >= 0 || m >= 0){
+			int d1 = (n>=0)?str.charAt(n--)-'0':0;
+			int d2 = (m>=0)?addStr.charAt(m--)-'0':0;
+			addition = carry + d1 + d2;
+			s.append(addition%10);
+			carry = addition/10;
+
+		}
+		s.reverse();
+		System.out.println(s);
+	}
+	private static void maximumscore(){
+		String str = Stringutil.createString();
+		int n = str.length();
+		String s = "";
+		int zerocount = 0,onecount=0,maxcount=0;
+		s = (String) str.subSequence(0, 1);
+		zerocount = getzerocount(s,'0');
+		s = (String) str.subSequence(1, n);
+		System.out.println(s);
+		onecount = getzerocount(s,'1');
+		maxcount =onecount+zerocount;
+		 if(n <= 2){
+				System.out.println(maxcount);
+				return;
+	        }
+		for(int i=1;i<n-1;i++){
+			if(str.charAt(i) == '0'){
+				zerocount++;
+			}else{
+				onecount--;
+			}
+			int temp = zerocount+onecount;
+			if(maxcount < temp){
+				maxcount=temp;
+			}
+		}
+		System.out.println(maxcount);
+	}
+	
+	private static int getzerocount(String s, char c) {
+		// TODO Auto-generated method stub
+		int count =0;
+		for(int i=0;i<s.length();i++){
+			if(s.charAt(i)==c){
+				count++;
+			}
+		}
+		return count;
 	}
 	
 }
