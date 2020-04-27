@@ -16,7 +16,9 @@ public class string {
 //		boolean status = continousAbsent();
 //		Stringutil.printStatus(status);
 	//	addTwoString();
-		maximumscore();
+		//maximumscore();
+		boolean status = longpressedstring();
+		Stringutil.printStatus(status);
 	}
 	
 	
@@ -285,5 +287,24 @@ public class string {
 		}
 		return count;
 	}
-	
+	private static boolean longpressedstring(){
+		String name = Stringutil.createString();
+		String typed = Stringutil.createString();
+		 if(typed.length()< name.length())  return false; 
+	        if(typed.length() == name.length()) return typed.equals(name); 
+	        
+	        int nameIndex = 0;
+	        for(int i = 0; i< typed.length(); i++){
+	            if(nameIndex < name.length() && typed.charAt(i) == name.charAt(nameIndex)){
+	                nameIndex++;
+	            } else if(i>0 && typed.charAt(i) == typed.charAt(i-1)){
+	                continue;
+	            } else return false;
+	        }
+	        if(nameIndex == name.length())
+	            return true;
+	        else 
+	            return false;
+	    
+	}
 }
