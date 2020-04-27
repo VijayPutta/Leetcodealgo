@@ -20,4 +20,11 @@ public class Arrayutil {
 		int n = sc.nextInt();
 		return n;
 	}
+	public static void printArray(int[] nums1) {
+		// TODO Auto-generated method stub
+		for(int i=0;i<nums1.length;i++){
+			System.out.println(nums1[i]+" ");
+		}
+		
+	}
 }
