@@ -17,8 +17,10 @@ public class string {
 //		Stringutil.printStatus(status);
 	//	addTwoString();
 		//maximumscore();
-		boolean status = longpressedstring();
-		Stringutil.printStatus(status);
+		//boolean status = longpressedstring();
+	//	Stringutil.printStatus(status);
+	//	addBinary();
+		minnoofmovesforanagram();
 	}
 	
 	
@@ -306,5 +308,63 @@ public class string {
 	        else 
 	            return false;
 	    
+	}
+	private static void addBinary(){
+		String a = Stringutil.createString();
+		String b = Stringutil.createString();
+		int n = a.length()-1;
+		int m = b.length()-1;
+		int sum = 0 , carry = 0;
+		StringBuffer result = new StringBuffer();
+		while(n>= 0 || m >=0){
+			int bit1 = n>=0?Integer.parseInt(String.valueOf(a.charAt(n))):0;
+			int bit2 = m>=0?Integer.parseInt(String.valueOf(b.charAt(n))):0;
+			sum = carry ^ bit1^bit2;
+			carry=(carry & bit1) | (carry & bit2) | (bit1 & bit2);
+			result.append(String.valueOf(sum));
+			n--;m--;
+		}
+		if(carry > 0)
+            result.append(String.valueOf(carry));
+		result.reverse();
+		System.out.println(result);
+	}
+	private static String convertfromintegertobinary(int sum) {
+		// TODO Auto-generated method stub
+		StringBuffer str = new StringBuffer();
+		while(sum != 0){ 
+			System.out.println(sum);
+			str.append(sum%2);
+			sum = sum/2;
+		}
+		return str.toString();
+	}
+
+
+
+	private static int convertfrombinarytointeger(String str){
+		int n = 0,j=0;
+		int length = str.length();
+		for(int i=length-1;i>=0;i--){
+			n += (str.charAt(i) - '0') * Math.pow(2, j);
+			j++;
+		}
+		return n;
+	}
+	private static void minnoofmovesforanagram(){
+		String s = Stringutil.createString();
+		String t = Stringutil.createString();
+		int[] arr = new int[26];
+		for(int i=0;i<s.length();i++){
+			arr[s.charAt(i)-'a']++;
+		}
+		for(int i=0;i<t.length();i++){
+			arr[t.charAt(i)-'a']--;
+		}
+		int ans=0;
+        for(int i=0;i<arr.length;i++) {
+            if(arr[i] > 0) ans += arr[i];
+        }
+        System.out.println(ans);
 	}
 }
