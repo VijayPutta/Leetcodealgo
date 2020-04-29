@@ -4,7 +4,8 @@ public class Array {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//getMaximumnofromcards();
-		mergeSortedarray();
+		//mergeSortedarray();
+		replacewithgreaterelementonrightside();
 	}
 
 	private static void getMaximumnofromcards() {
@@ -67,4 +68,17 @@ public class Array {
         }
         Arrayutil.printArray(nums1);
     }
+	private static void replacewithgreaterelementonrightside(){
+		int[] arr = Arrayutil.createArray();
+		int length = arr.length;
+		int max = -1,temp=0;
+		for(int i=length-1;i>=0;i--){
+			temp = max;
+			if(max < arr[i]){
+				max = arr[i];
+			}
+			arr[i] = temp;
+		}
+		Arrayutil.printArray(arr);
+	}
 }
