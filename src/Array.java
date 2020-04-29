@@ -5,7 +5,8 @@ public class Array {
 		// TODO Auto-generated method stub
 		//getMaximumnofromcards();
 		//mergeSortedarray();
-		replacewithgreaterelementonrightside();
+		//replacewithgreaterelementonrightside();
+		integerBreak();
 	}
 
 	private static void getMaximumnofromcards() {
@@ -80,5 +81,34 @@ public class Array {
 			arr[i] = temp;
 		}
 		Arrayutil.printArray(arr);
+	}
+	private static void integerBreak(){
+		int number = Arrayutil.getNumber();
+		int rem = number % 3;
+		int result = 0;
+		if(number == 1){
+			System.out.println("0");
+			return;
+		}
+		if(number == 2){
+			System.out.println("1");
+			return;
+		}
+		if(number == 3){
+			System.out.println("2");
+			return;
+		}
+		switch (rem){
+			case 0:
+				result = (int) Math.pow(3, number/3);
+				break;
+			case 1:
+				result = 2 * 2 * (int) Math.pow(3,  (number/3)-1);
+				break;
+			case 2:
+				result = 2 * (int) Math.pow(3, (number/3));
+				break;
+		}
+		System.out.println(result);
 	}
 }
