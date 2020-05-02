@@ -20,7 +20,9 @@ public class string {
 		//boolean status = longpressedstring();
 	//	Stringutil.printStatus(status);
 	//	addBinary();
-		minnoofmovesforanagram();
+		//minnoofmovesforanagram();
+		thesmallestString();
+		
 	}
 	
 	
@@ -367,5 +369,26 @@ public class string {
         }
         System.out.println(ans);
 	}
-	
+	private static void thesmallestString(){
+		
+		int n = Arrayutil.getNumber();
+		int k = Arrayutil.getNumber();
+		String s = Stringutil.createString();
+		String t = Stringutil.createString();
+		StringBuffer  str = new StringBuffer(t);
+		
+		int arr[][] = new int[k][2];
+		for(int i=0;i<k;i++){
+			for(int j=0;j<2;j++){
+				arr[i][j] = Arrayutil.getNumber();
+			}
+		}
+		for(int i=0;i<k;i++){
+			if((int)(str.charAt(arr[i][0])-'a') > (int)(str.charAt(arr[i][1])-'a')){
+				str.setCharAt(arr[i][0], t.charAt(arr[i][1]));
+				str.setCharAt(arr[i][1], t.charAt(arr[i][0]));
+			}
+		}
+		System.out.println(str);
+	}
 }
