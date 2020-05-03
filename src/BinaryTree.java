@@ -1,10 +1,15 @@
 import java.util.*;
 public class BinaryTree {
+	int max = 0;
+	Node root;
 	public static void main(String[] args){
 		//reachthenumberwithminsteps();
 		//getThesumofdepthtravesal();
 		//twoTreeIdenticalSequence();
-		trimTheNodes();
+		//trimTheNodes();
+//		BinaryTree b = new BinaryTree();
+//		b.Diameterofthetree();
+		convertBsttoGreatertree();
 	}
 	public static class Node{
 		int data;
@@ -18,7 +23,7 @@ public class BinaryTree {
 			
 		}
 	}
-	Node root;
+	
 	/*Leetcode problem which is incompletely done	 */
 	private static void reachthenumberwithminsteps() {
 		// TODO Auto-generated method stub
@@ -130,10 +135,16 @@ public class BinaryTree {
 		}
 		getLeafs(list,n.right);
 	}
-	private static void printTree(Node n) {
+	private static void printTree(Node n,int i) {
 		// TODO Auto-generated method stub
-		InorderTraversal(n);
+		 if (i==1)
+			InorderTraversal(n);
+		else if (i==2)
+			PreOrderTraversal(n);
+		else
+			PostOrderTraversal(n);
 	}
+	/* recursive traversal of tree */
 	private static void InorderTraversal(Node n) {
 		// TODO Auto-generated method stub
 		if(n == null){
@@ -143,13 +154,39 @@ public class BinaryTree {
 		System.out.println(n.data);
 		InorderTraversal(n.right);
 	}
+	private static void PreOrderTraversal(Node n) {
+		// TODO Auto-generated method stub
+		if(n == null){
+			return;
+		}
+		System.out.println(n.data);
+		PreOrderTraversal(n.left);
+		PreOrderTraversal(n.right);
+	}
+	private static void PostOrderTraversal(Node n) {
+		// TODO Auto-generated method stub
+		if(n == null){
+			return;
+		}
+		PostOrderTraversal(n.left);
+		PostOrderTraversal(n.right);
+		System.out.println(n.data);
+	}
+	/* iterative traversal of trees */
+	private static void IterativeInorderTraversal(){
+		int[] arr = Arrayutil.createArray();
+		Stack s = new Stack();
+		Node n = convertarraytotree(arr);
+		s.add(n);
+		
+	}
 	private static void trimTheNodes(){
 		int[] arr = Arrayutil.createArray();
 		Node n = convertarraytotree(arr);
 		int l = Arrayutil.getNumber();
 		int r = Arrayutil.getNumber();
 		n = trimRecursively(n,l,r);
-		printTree(n);
+		printTree(n,1);
 	}
 	private static Node trimRecursively(Node n, int l, int r) {
 		// TODO Auto-generated method stub
@@ -167,4 +204,47 @@ public class BinaryTree {
 		
 		return n;
 	}
+	public void Diameterofthetree(){
+		int[] arr = Arrayutil.createArray();
+		Node n = convertarraytotree(arr);
+		
+		recursiveDiamterofthetree(n);
+		System.out.println(max);
+	}
+	public int recursiveDiamterofthetree(Node n) {
+		// TODO Auto-generated method stub
+		if(n == null){
+			return 0;
+		}
+		int l = recursiveDiamterofthetree(n.left);
+		int r = recursiveDiamterofthetree(n.right);
+		max = Math.max(max, l+r);
+		return 1+ Math.max(l,r);
+	}
+	public static void convertBsttoGreatertree(){
+		int[] arr = Arrayutil.createArray();
+		Node n = convertarraytotree(arr);
+		int cursum = 0;
+		n = BSTPostOrderTraversal(n,cursum);
+		printTree(n, 1);
+	}
+	private static Node BSTPostOrderTraversal(Node n,int csum) {
+		// TODO Auto-generated method stub
+		if(n == null){
+			return null;
+		}
+		if(n.right != null){
+			n.right = BSTPostOrderTraversal(n.right, csum);
+			n.right.data = n.right.data + csum;
+			csum += n.right.data;
+		}
+		n.data = n.data + csum ;
+		if(n.left != null){
+			n.left = BSTPostOrderTraversal(n.left, csum);
+			n.left.data = n.left.data + csum;
+			csum += n.left.data;
+		}
+		return n;
+	}
+	
 }

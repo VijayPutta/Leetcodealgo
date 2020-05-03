@@ -1,3 +1,5 @@
+import java.awt.Dimension;
+import java.awt.List;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -390,5 +392,15 @@ public class string {
 			}
 		}
 		System.out.println(str);
+	}
+	private static void partElections(){
+		List s = new List();
+		int n = Arrayutil.getNumber();
+		for(int i=0;i<n;i++){
+			String str = Stringutil.createString();
+			s.add(str);
+		}
+		//int size = s.size();
+		
 	}
 }
