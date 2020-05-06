@@ -7,9 +7,12 @@ public class BinaryTree {
 		//getThesumofdepthtravesal();
 		//twoTreeIdenticalSequence();
 		//trimTheNodes();
-//		BinaryTree b = new BinaryTree();
+		BinaryTree b = new BinaryTree();
 //		b.Diameterofthetree();
-		convertBsttoGreatertree();
+		//convertBsttoGreatertree();
+		//b.treetilt();
+		//b.printSecondMinNode();
+		kthsmallestNode();
 	}
 	public static class Node{
 		int data;
@@ -246,5 +249,86 @@ public class BinaryTree {
 		}
 		return n;
 	}
-	
+	public void treetilt(){
+		int[] arr = Arrayutil.createArray();
+		Node n = convertarraytotree(arr);
+		recursiveTreeTilt(n);
+		System.out.println(max);
+	}
+	public int recursiveTreeTilt(Node n) {
+		// TODO Auto-generated method stub
+		if(n == null){
+			return 0;
+		}
+//		if(n.left != null){
+//			int l = n.left.data;
+//		}
+//		if(n.right != null){
+//			int r= n.right.data;
+//		}
+		int l = recursiveTreeTilt(n.left);
+		 int r = recursiveTreeTilt(n.right);
+		max += Math.abs(l-r);
+		return l+r+n.data;
+	}
+	public void printSecondMinNode(){
+		int[] arr = Arrayutil.createArray();
+		Node n = convertarraytotree(arr);
+		int[] min = new int[2];
+		min[0] = Integer.MAX_VALUE;
+		min[1] = Integer.MAX_VALUE;
+		recursiveprintSecondMin(n,min);
+		System.out.print(min[1]);
+	}
+	private void recursiveprintSecondMin(Node n, int[] min) {
+		// TODO Auto-generated method stub
+		if(n == null){
+			return;
+		}
+		if(n.data < min[0]){
+			int temp = min[0];
+			min[0] = n.data;
+			min[1] = temp;
+		}
+		if(n.data > min[0] && n.data < min[1]){
+			min[1] = n.data;
+		}
+		recursiveprintSecondMin(n.left,min);
+		recursiveprintSecondMin(n.right,min);
+	}
+	private static void invertTree(){
+		int[] arr = Arrayutil.createArray();
+		Node n = convertarraytotree(arr);
+		n = recursiveinvertTree(n);
+	}
+	private static Node recursiveinvertTree(Node n) {
+		// TODO Auto-generated method stub
+		if(n == null){
+			return null;
+		}
+		return null;
+	}
+	private static void kthsmallestNode(){
+		int[] arr = Arrayutil.createArray();
+		Node n = convertarraytotree(arr);
+		int k = Arrayutil.getNumber();
+		recursivekthsmallestNode(k,n);
+	}
+	private static void recursivekthsmallestNode(int k,Node n) {
+		// TODO Auto-generated method stub
+		LinkedList s = new LinkedList();
+		while(true){
+			while(n!= null){
+				s.add(n);
+				n = n.left;
+			}		
+			n = (Node) s.removeLast();
+			k--;
+			if(k==0){
+				System.out.println(n.data);
+			}
+			n = n.right;
+			
+		}
+	}
 }
