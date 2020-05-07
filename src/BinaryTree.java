@@ -12,7 +12,8 @@ public class BinaryTree {
 		//convertBsttoGreatertree();
 		//b.treetilt();
 		//b.printSecondMinNode();
-		kthsmallestNode();
+		//kthsmallestNode();
+		b.minDiffInBST();
 	}
 	public static class Node{
 		int data;
@@ -331,4 +332,23 @@ public class BinaryTree {
 			
 		}
 	}
+		/* For min distance btw two node */
+	   	 int min = Integer.MAX_VALUE;
+	     Node prev = null;
+	    public int minDiffInBST() {
+	    	int[] arr = Arrayutil.createArray();
+			Node n = convertarraytotree(arr);
+			recursiveminimumBST(n);
+	        return min;
+	     }
+	    public void recursiveminimumBST(Node n){
+	        if(n == null)
+	            return;
+	        recursiveminimumBST(n.left);
+	        if(prev != null){
+	            min = Math.min(min,n.data-prev.data);
+	        }
+	        prev = n;
+	        recursiveminimumBST(n.right);
+	    }
 }
