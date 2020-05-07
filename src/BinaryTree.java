@@ -13,7 +13,8 @@ public class BinaryTree {
 		//b.treetilt();
 		//b.printSecondMinNode();
 		//kthsmallestNode();
-		b.minDiffInBST();
+		//b.minDiffInBST();
+		b.convertBSTtoGreaterBST();
 	}
 	public static class Node{
 		int data;
@@ -351,4 +352,24 @@ public class BinaryTree {
 	        prev = n;
 	        recursiveminimumBST(n.right);
 	    }
+	    int sum = 0;
+	    public Node convertBSTtoGreaterBST() {
+	       // prev.val = 0;
+	    	int[] arr = Arrayutil.createArray();
+			Node root = convertarraytotree(arr);
+	    	convertBSTInorderTraversal(root);
+	        return root;
+	    }
+	    private void convertBSTInorderTraversal(Node n) {
+			// TODO Auto-generated method stub
+			if(n == null){
+				return;
+			}
+	        
+			InorderTraversal(n.right);
+			n.data += sum;
+	        sum = n.data;
+			InorderTraversal(n.left);
+	        
+		}
 }
