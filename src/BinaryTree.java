@@ -15,7 +15,8 @@ public class BinaryTree {
 		//kthsmallestNode();
 		//b.minDiffInBST();
 		//b.convertBSTtoGreaterBST();
-		b.convertArraytoBST();
+		//b.convertArraytoBST();
+		b.getTheCousins();
 	}
 	public static class Node{
 		int data;
@@ -394,4 +395,31 @@ public class BinaryTree {
 			n.right = recursiveConvertarraytoBST(arr,m+1,h);
 			return n;
 		}
+		int xdepth = 0,ydepth = 0;
+		Node xNode = null,yNode = null;
+		public void getTheCousins(){
+			int[] arr = Arrayutil.createArray();
+			int x = Arrayutil.getNumber();
+			int y = Arrayutil.getNumber();
+			Node root = convertarraytotree(arr);
+			depthOftheNode(root,x,y,1,null);
+			if(xNode != yNode && xdepth == ydepth){
+				System.out.println("there are cousins");
+			}
+		}
+		public void depthOftheNode(Node root,int element,int element1,int depth,Node pNode){
+			if(root == null){
+				return;
+			}
+			if(root.data == element){
+				xdepth = depth;
+				xNode = pNode;
+			}if(root.data == element1){
+				ydepth = depth;
+				yNode = pNode;
+			}
+			depthOftheNode(root.left,element,element1,depth+1,root);
+			depthOftheNode(root.right,element,element1,depth+1,root);
+		}
+		
 }
