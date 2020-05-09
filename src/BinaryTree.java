@@ -16,7 +16,9 @@ public class BinaryTree {
 		//b.minDiffInBST();
 		//b.convertBSTtoGreaterBST();
 		//b.convertArraytoBST();
-		b.getTheCousins();
+		//b.getTheCousins();
+		//b.validateBST();
+		b.pathofthesums();
 	}
 	public static class Node{
 		int data;
@@ -420,6 +422,43 @@ public class BinaryTree {
 			}
 			depthOftheNode(root.left,element,element1,depth+1,root);
 			depthOftheNode(root.right,element,element1,depth+1,root);
+		}
+		public void validateBST(){
+			int[] arr = Arrayutil.createArray();
+			Node root = convertarraytotree(arr);
+			Node min = null;
+			Node max =null;
+			boolean result = recursiveValidateBST(root,min,max);
+			System.out.println(result);
+		}
+		private boolean recursiveValidateBST(Node n,Node min,Node max) {
+			// TODO Auto-generated method stub
+			if(n == null){
+				return true;
+			}
+			boolean bool = false;
+			if((min != null && n.data <= min.data )||( max != null && n.data >= max.data)){
+				return false;
+			}
+			return recursiveValidateBST(n.left,min,n) &&recursiveValidateBST(n.right,n,max);
+		}
+		public void diameterOftheTree(){
+				
+		}
+		/* Sum of the path should be from parent node to child node
+		 */
+		public void pathofthesums(){
+			int[] arr = Arrayutil.createArray();
+			Node root = convertarraytotree(arr);
+			int sum = Arrayutil.getNumber();
+			System.out.println(recursivepathofthesums(root,sum));
+		}
+		private boolean recursivepathofthesums(Node n, int sum) {
+			// TODO Auto-generated method stub
+			if(n == null)return false;
+			if(n.right == null && n.left == null) return sum == n.data;
+			
+			return recursivepathofthesums(n.left,sum-n.data) || recursivepathofthesums(n.right,sum-n.data);
 		}
 		
 }
