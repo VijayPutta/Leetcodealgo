@@ -14,7 +14,8 @@ public class BinaryTree {
 		//b.printSecondMinNode();
 		//kthsmallestNode();
 		//b.minDiffInBST();
-		b.convertBSTtoGreaterBST();
+		//b.convertBSTtoGreaterBST();
+		b.convertArraytoBST();
 	}
 	public static class Node{
 		int data;
@@ -371,5 +372,26 @@ public class BinaryTree {
 	        sum = n.data;
 			InorderTraversal(n.left);
 	        
+		}
+	    /* minimal tree 
+	     * Convert array to BST with minimum height*/
+	    static Node _n;
+	    public void convertArraytoBST(){
+	    	System.out.println("Your into finding minimal tree");
+	    	int[] arr = Arrayutil.createArray();
+	    	_n = recursiveConvertarraytoBST(arr,0,arr.length-1);
+	    	printTree(_n,1);
+	    }
+	    
+		private Node recursiveConvertarraytoBST(int[] arr,int l,int h) {
+			// TODO Auto-generated method stub
+			if(l>h){
+				return null;
+			}
+			int m = (l+h)/2;
+			Node n = new Node(arr[m]);
+			n.left = recursiveConvertarraytoBST(arr,l,m-1);
+			n.right = recursiveConvertarraytoBST(arr,m+1,h);
+			return n;
 		}
 }
