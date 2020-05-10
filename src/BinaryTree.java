@@ -18,7 +18,9 @@ public class BinaryTree {
 		//b.convertArraytoBST();
 		//b.getTheCousins();
 		//b.validateBST();
-		b.pathofthesums();
+		//b.pathofthesums();
+		//b.pathofthesums1();
+		b.verticalOrderSum();
 	}
 	public static class Node{
 		int data;
@@ -459,6 +461,50 @@ public class BinaryTree {
 			if(n.right == null && n.left == null) return sum == n.data;
 			
 			return recursivepathofthesums(n.left,sum-n.data) || recursivepathofthesums(n.right,sum-n.data);
+		}
+		public void pathofthesums1(){
+			int[] arr = Arrayutil.createArray();
+			Node root = convertarraytotree(arr);
+			int sum = Arrayutil.getNumber();
+			System.out.println(pathSum(root,sum));
+		}
+		private int recursiveCall(Node n, int sum) {
+			// TODO Auto-generated method stub
+			if(n == null){
+				return 0;
+			}
+			int count =0;
+			if(n.data == sum){
+				count++;
+			}
+			return count + recursiveCall(n.left,sum-n.data) +recursiveCall(n.right,sum-n.data);
+		}
+		public int pathSum(Node n, int sum) {
+	        int curCount = recursiveCall(n, sum);
+	        if (n == null) {
+	            return 0;
+	        }
+
+	        return curCount + pathSum(n.left, sum) + pathSum(n.right, sum);
+	    }
+		HashMap map = new HashMap();
+		
+		public void verticalOrderSum(){
+			int[] arr = Arrayutil.createArray();
+			Node root = convertarraytotree(arr);
+			recursiveverticalOrderSum(root,0);
+			hashmap.printHashMap(map);
+		}
+		private void recursiveverticalOrderSum(Node n,int depth) {
+			// TODO Auto-generated method stub
+			if(n == null){
+				return;
+			}
+			if(n!= null){
+				map.put(depth, (int)map.getOrDefault(depth, 0)+n.data);
+			}
+			recursiveverticalOrderSum(n.left,depth-1);
+			recursiveverticalOrderSum(n.right,depth+1);
 		}
 		
 }
