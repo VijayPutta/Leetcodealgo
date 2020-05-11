@@ -20,7 +20,8 @@ public class BinaryTree {
 		//b.validateBST();
 		//b.pathofthesums();
 		//b.pathofthesums1();
-		b.verticalOrderSum();
+		//b.verticalOrderSum();
+		b.maximumwidthofBST();
 	}
 	public static class Node{
 		int data;
@@ -505,6 +506,38 @@ public class BinaryTree {
 			}
 			recursiveverticalOrderSum(n.left,depth-1);
 			recursiveverticalOrderSum(n.right,depth+1);
+		}
+		public void maximumwidthofBST(){
+			int[] arr = Arrayutil.createArray();
+			Node root = convertarraytotree(arr);
+			recursivemaximumwidthofBST(root);
+		}
+		private void recursivemaximumwidthofBST(Node n) {
+			// TODO Auto-generated method stub
+			Queue q = new LinkedList();
+			if(n != null){
+				q.add(n);
+			}
+			int maxwidth = 0;
+			System.out.println(q.size());
+			while(!q.isEmpty()){
+				int size = q.size();
+				//maxwidth = q.size();
+				if(maxwidth < size){
+					maxwidth = size;
+				}
+				while(size-- > 0){
+					Node temp = (Node) q.remove();
+					if(temp.left != null){
+						q.add(temp.left);
+					}if(temp.right != null){
+						q.add(temp.right);
+					}
+					
+				}
+				
+			}
+			System.out.println(maxwidth);
 		}
 		
 }
