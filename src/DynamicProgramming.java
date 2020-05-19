@@ -6,7 +6,9 @@ public class DynamicProgramming {
 		//LongestPallindromeSubsequence();
 		DynamicProgramming dp = new DynamicProgramming();
 		//dp.noofclimbingsteps();
-		dp.minCostClimbingStairs();
+		//dp.minCostClimbingStairs();
+		//dp.maxrodcutting();
+		dp.Longestpallindromicsubsequence();
 	}
 
 	private static void LongestPallindromeSubsequence() {
@@ -64,4 +66,38 @@ public class DynamicProgramming {
         System.out.println(Math.min(f1, f2));
         return Math.min(f1,f2);
     }
+	public void maxrodcutting(){
+		int[] price = Arrayutil.createArray();
+		
+		int t[] = new int[price.length+1];
+		for(int i=1;i<=price.length;i++){
+			for(int j=i;j<=price.length;j++){
+				t[j] = Math.max(t[j], t[j-i]+price[i-1]);
+			}
+		}
+		System.out.println(t[price.length]);
+	}
+	public void Longestpallindromicsubsequence(){
+		String s = Stringutil.createString();
+		int t[][] = new int[s.length()+1][s.length()+1];
+		for(int i=0;i<=s.length();i++){
+			for(int j=0;j<=s.length();j++){
+				if(i==j){
+					t[i][j] = 1;
+				}
+			}
+		}
+		for(int i=2;i<=s.length();i++){
+			for(int j=i+1;j<=s.length();j++){
+				if(i>j){
+					 if(s.charAt(i)==s.charAt(j)){
+						 t[i][j] = t[i+1][j-1] + 2;
+					 }else{
+						 t[i][j] = Math.max(t[i-1][j], t[i][j-1]);
+					 }
+				}
+			}
+		}
+		System.out.println(t[0][s.length()]);
+	}
 }

@@ -21,7 +21,10 @@ public class BinaryTree {
 		//b.pathofthesums();
 		//b.pathofthesums1();
 		//b.verticalOrderSum();
-		b.maximumwidthofBST();
+		//b.maximumwidthofBST();
+		//b.binaryTreePrune();
+		b.increasingBST();
+		
 	}
 	public static class Node{
 		int data;
@@ -539,5 +542,77 @@ public class BinaryTree {
 			}
 			System.out.println(maxwidth);
 		}
+		public void binaryTreePrune(){
+			int[] arr = Arrayutil.createArray();
+			Node root = convertarraytotree(arr);
+			pruneTree(root);
+		}
+		public Node pruneTree(Node n) {
+	        if(n == null){
+	            return null;
+	        }
+	       n.left = pruneTree(n.left);
+	       n.right = pruneTree(n.right);
+	        if(n.left == null && n.right == null && n.data == 0){
+	            return null;
+	        }
+	        return root;
+
+	    }
+		Node cur;
+	    public void increasingBST() {
+	    	int[] arr = Arrayutil.createArray();
+			Node root = convertarraytotree(arr);
+	        Node ans = new Node(0);
+	        cur = ans;
+	        inorder(root);
+	        printRightNodes(ans);
+	    }
+/*
+ *Example 1:
+Input: [5,3,6,2,4,null,8,1,null,null,null,7,9]
+
+       5                     
+      / \
+    3    6     to 
+   / \    \
+  2   4    8
+ /        / \ 
+1        7   9
+ 
+  to 
+1
+  \
+   2
+    \
+     3
+      \
+       4
+        \
+         5
+          \
+           6
+            \
+             7
+              \
+               8
+                \
+                 9  
+ */
+		    private void printRightNodes(Node ans) {
+				// TODO Auto-generated method stub
+				if(ans != null){
+					System.out.println(ans.data);
+					printRightNodes(ans.right);
+				}
+			}
+			public void inorder(Node node) {
+		        if (node == null) return;
+		        inorder(node.left);
+		        node.left = null;
+		        cur.right = node;
+		        cur = node;
+		        inorder(node.right);
+		    }
 		
 }

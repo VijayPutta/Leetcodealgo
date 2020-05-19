@@ -6,7 +6,8 @@ public class Array {
 		//getMaximumnofromcards();
 		//mergeSortedarray();
 		//replacewithgreaterelementonrightside();
-		integerBreak();
+		//integerBreak();
+		searchinrotatedarray();
 	}
 
 	private static void getMaximumnofromcards() {
@@ -111,4 +112,103 @@ public class Array {
 		}
 		System.out.println(result);
 	}
+	/*Example 1:
+		Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
+		Input: nums = [2,5,6,0,0,1,2], target = 0
+		Output: true
+		*/
+	private static void searchinrotatedarray(){
+		int[] nums = Arrayutil.createArray();
+		int length = nums.length;
+		int start = 0, end= nums.length-1,mid;
+		System.out.println("enter the number to be searched");
+		int target = Arrayutil.getNumber();
+		while(start <= end){
+	        mid = start + (end - start)/2;
+	        if(nums[mid] == target){
+	        	System.out.println("true");
+	        } 
+	        
+	        //if left part is sorted
+	        if(nums[start] < nums[mid]){
+	            if(target < nums[start] || target > nums[mid]){
+	                //target is in rotated part
+	                start = mid + 1;
+	            }else{
+	                end = mid - 1;
+	            }
+	        }else if(nums[start] > nums[mid]){
+	            //right part is rotated
+	            
+	            //target is in rotated part
+	            if(target < nums[mid] || target > nums[end]){
+	                end = mid -1;
+	            }else{
+	                start = mid + 1;
+	            }
+	        }else{
+	            //duplicates, we know nums[mid] != target, so nums[start] != target
+	            //based on current information, we can only move left pointer to skip one cell
+	            //thus in the worest case, we would have target: 2, and array like 11111111, then
+	            //the running time would be O(n)
+	            start ++;
+	        }
+	    }
+	    
+    	System.out.println("false");
+	}
+	/*
+	 * Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
+
+		(i.e.,  [0,1,2,4,5,6,7] might become  [4,5,6,7,0,1,2]).
+		
+		Find the minimum element.
+		
+		You may assume no duplicate exists in the array.
+		
+		Example 1:
+		
+		Input: [3,4,5,1,2] 
+		Output: 1
+		Example 2:
+		
+		Input: [4,5,6,7,0,1,2]
+		Output: 0
+	 */
+	public static int findMin(int[] num) {
+	    int low = 0;
+	    int high = num.length - 1;
+	    while(low < high){
+	        int mid = (low + high) / 2;
+	        if(num[high] < num[mid]){
+	            low = mid + 1;
+	        } else {
+	            high = mid;
+	        }
+	    }
+	    return num[high];
+	    }
+	/*
+	 * With duplicates the above problem
+	 */
+	public int findMinwithduplicatesinsortedarray(int[] num) {
+        int lo = 0;
+        int hi = num.length - 1;
+        int mid = 0;
+        
+        while(lo < hi) {
+            mid = lo + (hi - lo) / 2;
+            
+            if (num[mid] > num[hi]) {
+                lo = mid + 1;
+            }
+            else if (num[mid] < num[hi]) {
+                hi = mid;
+            }	
+            else { // when num[mid] and num[hi] are same
+                hi--;
+            }
+        }
+        return num[lo];
+    }
 }
