@@ -24,7 +24,6 @@ public class Array {
 			leftsum -= arr[k-1-i];
 			rightsum += arr[n-i-1];
 			max = Math.max(max, leftsum+rightsum);
-			
 		}
 		System.out.println(max);
 	}

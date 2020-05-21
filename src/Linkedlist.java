@@ -1,4 +1,8 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.Stack;
 
 
 public class Linkedlist {
@@ -11,21 +15,29 @@ public class Linkedlist {
 		int l=in.nextInt();
 				
 		Node head2=null;
+		Node head3 = null;
 		for(int i=0;i<l;i++) {
 			int data=in.nextInt();
 			list.head=list.addNode(data,list.head);
 		}
 		System.out.println("entered the values");
-		reverseLinkedList(list.head);
+		//reverseLinkedList(list.head);
+		//oddEvenList(list.head);
+		//list.addNumberwhichareinreverse(list.head);
+		list.nextgreaterNode(list.head);
 	}
-	 Node head;
+	
+	Node head;
 	public class Node{
 		int data;
 		Node next;
-		Node(int data){
+		Node() {}
+		Node(int data) { this.data = data; }
+		
+		Node(int data,Node next){
 			this.data =  data;
-			this.next = null;
-		}
+			this.next = next;
+		}	
 	}
 	/*Iterative way of reversing a linked list
 	 */
@@ -43,7 +55,78 @@ public class Linkedlist {
 		head2 = prev;
 		printLinkedList(prev);
 	}
-	
+	/*
+	 * Separate the odd and even positions
+	 */
+	private static void oddEvenList(Node head2){
+		if(head2 == null){
+			return;
+		}
+		Node oddNode = head2;
+		Node evenNode = head2.next;
+		Node temp = evenNode;
+		while(temp != null && temp.next!= null){
+			oddNode.next = oddNode.next.next ;
+			temp.next = temp.next.next;
+			oddNode = oddNode.next;
+			temp = temp.next;
+		}
+		oddNode.next = evenNode;
+		printLinkedList(head2);
+		//printLinkedList(oddNode);
+	}
+	private void addNumberwhichareinreverse(Node head2){
+		int sl = Arrayutil.getNumber();
+		Linkedlist l = new Linkedlist();
+		for(int i=0;i<sl;i++) {
+			int data=Arrayutil.getNumber();
+			l.head=l.addNode(data,l.head);
+		}
+		int n = Arrayutil.getNumber();
+		if(n == 1){
+			addNumber1(head2,l.head);
+		}
+	}
+	private  void addNumber1(Node head2, Node head3) {
+		// TODO Auto-generated method stub
+		Node temp = new Node(0);
+		Node curtemp = temp;
+		
+		int sum = 0;
+		while(head2 != null || head3 != null){
+			sum = sum / 10;
+			if(head2 != null){
+				sum+=head2.data;
+				head2 = head2.next;
+			}
+			if(head3 != null){
+				sum+=head3.data;
+				head3 = head3.next;
+			}
+			curtemp.next = new Node(sum%10);
+			curtemp = curtemp.next;	
+		}
+		if(sum/10 == 1){
+			curtemp.next = new Node(1);
+		}
+		printLinkedList(temp.next);
+	}
+	private void nextgreaterNode(Node head2) {
+		// TODO Auto-generated method stub
+		ArrayList<Integer> A = new ArrayList<>();
+        for (Node node = head2; node != null; node = node.next)
+            A.add(node.data);
+        int[] res = new int[A.size()];
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < A.size(); ++i) {
+            while (!stack.isEmpty() && A.get(stack.peek()) < A.get(i))
+                res[stack.pop()] = A.get(i);
+            stack.push(i);
+        }
+        for(int i=0;i<res.length;i++){
+        	System.out.println(res[i]);
+        }
+	}
 	private static void printLinkedList(Node head2) {
 		// TODO Auto-generated method stub
 		Node temp = head2;
