@@ -24,7 +24,8 @@ public class Linkedlist {
 		//reverseLinkedList(list.head);
 		//oddEvenList(list.head);
 		//list.addNumberwhichareinreverse(list.head);
-		list.nextgreaterNode(list.head);
+		//list.nextgreaterNode(list.head);
+		list.removenthNode(list.head);
 	}
 	
 	Node head;
@@ -126,6 +127,24 @@ public class Linkedlist {
         for(int i=0;i<res.length;i++){
         	System.out.println(res[i]);
         }
+	}
+	private void removenthNode(Node head2){
+		Node start = new Node(0);
+		Node slow = start, fast = start;
+	    slow.next = head2;
+	    int n = Arrayutil.getNumber();
+	    //Move fast in front so that the gap between slow and fast becomes n
+	    for(int i=1; i<=n+1; i++)   {
+	        fast = fast.next;
+	    }
+	    //Move fast to the end, maintaining the gap
+	    while(fast != null) {
+	        slow = slow.next;
+	        fast = fast.next;
+	    }
+	    //Skip the desired node
+	    slow.next = slow.next.next;
+	   printLinkedList(start.next);
 	}
 	private static void printLinkedList(Node head2) {
 		// TODO Auto-generated method stub
