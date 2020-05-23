@@ -3,6 +3,7 @@ import java.awt.List;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Stack;
 
 
 public class string {
@@ -23,7 +24,8 @@ public class string {
 	//	Stringutil.printStatus(status);
 	//	addBinary();
 		//minnoofmovesforanagram();
-		thesmallestString();
+		//thesmallestString();
+		removeAdjacentDuplicate();
 		
 	}
 	
@@ -393,6 +395,18 @@ public class string {
 		}
 		System.out.println(str);
 	}
+	/*
+	 * Input: ["eat", "tea", "tan", "ate", "nat", "bat"],
+		Output:
+		[
+		  ["ate","eat","tea"],
+		  ["nat","tan"],
+		  ["bat"]
+		]
+	 */
+	public void groupAnagrams(){
+		
+	}
 	private static void partElections(){
 		List s = new List();
 		int n = Arrayutil.getNumber();
@@ -402,5 +416,19 @@ public class string {
 		}
 		//int size = s.size();
 		
+	}
+	/* 
+	 *  Remove Adjacent chars from teh string
+	 */
+	public static void removeAdjacentDuplicate(){
+				String s = Stringutil.createString();
+		        int i = 0, n = s.length();
+		        char[] res = s.toCharArray();
+		        for (int j = 0; j < n; ++j, ++i) {
+		            res[i] = res[j];
+		            if (i > 0 && res[i - 1] == res[i]) // count = 2
+		                i -= 2;
+		        }
+		        System.out.println(new String(res, 0, i));
 	}
 }

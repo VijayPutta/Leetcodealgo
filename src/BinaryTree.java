@@ -12,8 +12,8 @@ public class BinaryTree {
 		//convertBsttoGreatertree();
 		//b.treetilt();
 		//b.printSecondMinNode();
-		//kthsmallestNode();
 		//b.minDiffInBST();
+		//kthsmallestNode();
 		//b.convertBSTtoGreaterBST();
 		//b.convertArraytoBST();
 		//b.getTheCousins();

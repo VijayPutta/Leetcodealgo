@@ -101,6 +101,7 @@ public class DynamicProgramming {
 		}
 		System.out.println(t[0][s.length()]);
 	}
+	
 	public void minDistance() {
 		String word1 = Stringutil.createString();
 		String word2 = Stringutil.createString();
