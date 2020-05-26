@@ -31,8 +31,13 @@ public class BinaryTree {
 		//b.convertFromPreorderandpostOrder();
 		//b.convertFromInorderandPreorder();
 		
-		b.BSTfrompostandinorder();
+		//b.BSTfrompostandinorder();
+		//b.leftSideView();
+		//b.rightSideView();
+		//b.topView();
+		b.bottomView();
 	}
+	
 	public static class Node{
 		int data;
 		Node left,right;
@@ -781,5 +786,85 @@ Input: [5,3,6,2,4,null,8,1,null,null,null,7,9]
 			}
 			return 0;
 		}
-		
+		private void leftSideView(){
+			int arr[] = Arrayutil.createArray();
+			Node n = convertarraytotree(arr);
+			Queue q = new LinkedList();
+			q.offer(n);
+			
+			int size = 0 ;
+			while(!q.isEmpty()){
+				Node temp = null;
+				if(size == 0){ 
+					size = q.size();
+					temp = (Node)q.poll();
+					System.out.println(temp.data);
+				}else{
+					temp = (Node)q.poll();
+				}
+				size--;
+				
+				
+				if(temp.left != null){
+					q.offer(temp.left);
+				}
+				if(temp.right != null){
+					q.offer(temp.right);
+				}
+			}
+		}
+		int maxx = -1;
+		private void rightSideView(){
+			int arr[] = Arrayutil.createArray();
+			Node n = convertarraytotree(arr);
+			recursiveRSV(n,0);
+		}
+		private void recursiveRSV(Node n, int i) {
+			// TODO Auto-generated method stub
+			if(n == null){
+				return;
+			}
+			if(maxx < i){
+				System.out.println(n.data);
+				maxx = i;
+			}
+			recursiveRSV(n.right, i+1);
+			recursiveRSV(n.left, i+1);
+		}
+		private void topView(){
+			int arr[] = Arrayutil.createArray();
+			Node n = convertarraytotree(arr);
+			//map.put(0, n);
+			recursiveTopView(n,0);
+			 System.out.print(map);
+		}
+		private void recursiveTopView(Node n, int i) {
+			// TODO Auto-generated method stub
+			if(n == null){
+				return;
+			}
+			if(!map.containsKey(i)){
+				map.put(i, n.data);
+			}
+			recursiveTopView(n.left,i-1);
+			recursiveTopView(n.right,i+1);
+		}
+		private void bottomView() {
+			// TODO Auto-generated method stub
+			int arr[] = Arrayutil.createArray();
+			Node n = convertarraytotree(arr);
+			//map.put(0, n);
+			recursivebottomView(n,0);
+			 System.out.print(map);
+		}
+		private void recursivebottomView(Node n, int i) {
+			// TODO Auto-generated method stub
+			if(n == null){
+				return;
+			}
+			map.put(i, n.data);
+			recursivebottomView(n.left,i-1);
+			recursivebottomView(n.right,i+1);
+		}
 }
+ 
