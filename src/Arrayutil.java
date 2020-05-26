@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -25,5 +27,11 @@ public class Arrayutil {
 		for(int i=0;i<nums1.length;i++){
 			System.out.println(nums1[i]+" ");
 		}
+	}
+	public static List convertArraytoList(){
+		List list = new LinkedList();
+		int[] arr = Arrayutil.createArray();
+		list.add(arr);
+		return list;
 	}
 }

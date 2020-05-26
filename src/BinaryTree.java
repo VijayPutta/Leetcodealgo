@@ -2,6 +2,8 @@ import java.util.*;
 public class BinaryTree {
 	int max = 0;
 	Node root;
+	static int preorder = 0;
+	static int postorder = 0;
 	public static void main(String[] args){
 		//reachthenumberwithminsteps();
 		//getThesumofdepthtravesal();
@@ -23,8 +25,13 @@ public class BinaryTree {
 		//b.verticalOrderSum();
 		//b.maximumwidthofBST();
 		//b.binaryTreePrune();
-		b.increasingBST();
+		//b.increasingBST();
+		//b.LowestCommonAncestor();
+		//b.convertPreordertoBST();
+		//b.convertFromPreorderandpostOrder();
+		//b.convertFromInorderandPreorder();
 		
+		b.BSTfrompostandinorder();
 	}
 	public static class Node{
 		int data;
@@ -568,6 +575,14 @@ public class BinaryTree {
 	        inorder(root);
 	        printRightNodes(ans);
 	    }
+	    public void inorder(Node node) {
+	        if (node == null) return;
+	        inorder(node.left);
+	        node.left = null;
+	        cur.right = node;
+	        cur = node;
+	        inorder(node.right);
+	    }
 /*
  *Example 1:
 Input: [5,3,6,2,4,null,8,1,null,null,null,7,9]
@@ -599,20 +614,172 @@ Input: [5,3,6,2,4,null,8,1,null,null,null,7,9]
                 \
                  9  
  */
-		    private void printRightNodes(Node ans) {
-				// TODO Auto-generated method stub
-				if(ans != null){
-					System.out.println(ans.data);
-					printRightNodes(ans.right);
+	    private void printRightNodes(Node ans) {
+			// TODO Auto-generated method stub
+			if(ans != null){
+				System.out.println(ans.data);
+				printRightNodes(ans.right);
+			}
+		}
+	    /*
+	     *      5                     
+		      /  \
+		    3     7     to 
+		   / \   / \
+		  2   4  6   8
+		 
+	     */
+		private void LowestCommonAncestor(){
+			int arr[] = Arrayutil.createArray();
+			Node parent = convertarraytotree(arr);
+			int a = Arrayutil.getNumber();
+			int b = Arrayutil.getNumber();
+			Node n1 = new Node(a);
+			Node n2 = new Node(b);
+			Node lca = recursiveLCA(parent,n1,n2);
+			System.out.println(lca);
+		}
+		private Node recursiveLCA(Node parent, Node n1, Node n2) {
+			// TODO Auto-generated method stub
+			if(parent == null){
+				return  null;
+			}
+			if(parent == n1 || parent == n2){
+				return parent;
+			}
+			Node left = recursiveLCA(parent.left, n1, n2);
+			Node right = recursiveLCA(parent.right, n1, n2);
+			if(left != null && right != null){
+                return parent;
+            }
+             if(left != null && right != null){
+                return null;
+            }
+			if(left == null){
+				return right;
+			}
+			return left;
+		}
+		/*
+		 * https://www.youtube.com/watch?v=GW63gMgfeS8
+		 */
+		private void convertPreordertoBST(){
+			int pre[] = Arrayutil.createArray();
+			int length = pre.length;
+			recursiveconvertPreordertoBST(pre,length);
+		}
+		private void recursiveconvertPreordertoBST(int[] pre, int length) {
+			// TODO Auto-generated method stub
+			Node node = new Node(pre[0]);
+			Stack s = new Stack();
+			s.push(node);
+			for(int i=1;i<length;i++){
+				Node temp = null;
+				Node t = s.isEmpty() ? (Node)s.peek():null;
+				while(!s.isEmpty() && t != null && pre[i] > t.data){
+					temp = (Node) s.pop();
+					t = (Node)s.peek();
+				}
+				if(temp != null){
+					temp.right = new Node(pre[i]);
+					s.push(temp);
+				}else{
+					temp = (Node)s.peek();
+					temp.left = new Node(pre[i]);
+					s.push(temp.left);
 				}
 			}
-			public void inorder(Node node) {
-		        if (node == null) return;
-		        inorder(node.left);
-		        node.left = null;
-		        cur.right = node;
-		        cur = node;
-		        inorder(node.right);
+			printTree(node, 1);
+		}
+		private void convertFromPreorderandpostOrder(){
+			int pre[] = Arrayutil.createArray();
+			int post[] = Arrayutil.createArray();
+			int length = pre.length;	
+			int l = post.length;
+			if(length != l){
+				return ;
+			}
+			else{
+				Node n = constructFromPrePost(pre,post);
+				printTree(n, 1);
+			}
+		}
+		 public Node constructFromPrePost(int[] pre, int[] post) {
+		        int N = pre.length;
+		        if (N == 0) return null;
+		        Node root = new Node(pre[0]);
+		        if (N == 1) return root;
+
+		        int L = 0;
+		        for (int i = 0; i < N; ++i)
+		            if (post[i] == pre[1])
+		                L = i+1;
+
+		        root.left = constructFromPrePost(Arrays.copyOfRange(pre, 1, L+1),
+		                                         Arrays.copyOfRange(post, 0, L));
+		        root.right = constructFromPrePost(Arrays.copyOfRange(pre, L+1, N),
+		                                          Arrays.copyOfRange(post, L, N-1));
+		        return root;
 		    }
+		 private void convertFromInorderandPreorder(){
+			int pre[] = Arrayutil.createArray();
+			int in[] = Arrayutil.createArray();
+			Node root11 = constructFromInPre(pre,in,0,pre.length-1);
+			printTree(root11, 1);
+		 }
+		private Node constructFromInPre(int[] pre, int[] in, int p, int l) {
+			// TODO Auto-generated method stub
+			if(p > l){
+				return null;
+			}
+			Node root1 = new Node(pre[preorder++]);
+			if(p == l){
+				return root;
+			}
+			int index = search(root1.data,p,l,in);
+			root1.left = constructFromInPre(pre,in,p,index-1);
+			root1.right = constructFromInPre(pre, in, index+1, l);
+			
+			return root1;
+		}
+		private void BSTfrompostandinorder(){
+			int post[] = Arrayutil.createArray();
+			int in[] = Arrayutil.createArray();
+			buildTreeFromPostAndInOrder(post,in,0,post.length-1);
+		}
+		public Node buildTreeFromPostAndInOrder(int[] post,int[] inOrder,int l,int r) {
+			if(l<=r) {
+				int index=search(inOrder,post[postorder]);
+				postorder--;
+				Node root=new Node(inOrder[index]);
+				if(l==r) {
+					return root;
+				}
+				root.right=buildTreeFromPostAndInOrder(post,inOrder,index+1,r);
+				root.left=buildTreeFromPostAndInOrder(post,inOrder,l,index-1);
+				return root;
+			}
+			else {
+				return null;
+			}	
+		}
+		private int search(int p, int s, int l, int[] in) {
+			// TODO Auto-generated method stub
+			int i;
+			for(i=s;i<=l;i++){
+				if(p == in[i]){
+					return i;
+				}
+			}
+			return i;
+		}
+		public int search(int[] inOrder,int key) {
+			for(int i=0;i<inOrder.length;i++) {
+				if(inOrder[i]==key) {
+					return i;
+				}
+			}
+			return 0;
+		}
 		
 }

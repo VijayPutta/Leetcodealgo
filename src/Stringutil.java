@@ -28,4 +28,13 @@ public class Stringutil {
 	public static void printStatus(boolean status){
 		System.out.println(status);
 	}
+	public static String swap(String a, int i, int j) {
+		// TODO Auto-generated method stub
+		char temp; 
+        char[] charArray = a.toCharArray(); 
+        temp = charArray[i] ; 
+        charArray[i] = charArray[j]; 
+        charArray[j] = temp; 
+        return String.valueOf(charArray); 
+	}
 }

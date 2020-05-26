@@ -25,11 +25,37 @@ public class string {
 	//	addBinary();
 		//minnoofmovesforanagram();
 		//thesmallestString();
-		removeAdjacentDuplicate();
-		
+		//removeAdjacentDuplicate();
+		//removeAdjacentDuplicate2();
+		permutationsofthestring();
 	}
 	
 	
+
+	private static void permutationsofthestring() {
+		// TODO Auto-generated method stub
+		String perm = Stringutil.createString();
+		int length = perm.length();
+		recursivePermutate(perm,0,length-1);
+	}
+
+
+
+	private static void recursivePermutate(String perm, int l, int r) {
+		// TODO Auto-generated method stub
+		if(l==r){
+			System.out.println(perm);
+		}
+		else{
+			for(int i=l;i<=r;i++){
+				perm = Stringutil.swap(perm,l,i);
+				recursivePermutate(perm, l+1, r);
+				perm = Stringutil.swap(perm,l,i);
+			}
+		}
+	}
+
+
 
 	/* brute force solution */
 	private static void DefrangingIpAddress() {
@@ -430,5 +456,24 @@ public class string {
 		                i -= 2;
 		        }
 		        System.out.println(new String(res, 0, i));
+	}
+	public static void removeAdjacentDuplicate2(){
+		String s = Stringutil.createString();
+        int i = 0, n = s.length();
+        int n1 = Arrayutil.getNumber();
+        char[] res = s.toCharArray();
+        int count[] = new int[n];
+        for (int j = 0; j < n; ++j, ++i) {
+        	res[i] = res[j];
+        	if(i>0 && res[i] == res[i-1]){
+        		count[i] = count[i-1]+1;
+        	}else{
+        		count[i] = 1;
+        	}
+        	if(count[i] == n1){
+        		i -= n1;
+        	}
+        }
+        System.out.println(new String(res, 0, i));
 	}
 }
