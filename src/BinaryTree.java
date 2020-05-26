@@ -35,7 +35,9 @@ public class BinaryTree {
 		//b.leftSideView();
 		//b.rightSideView();
 		//b.topView();
-		b.bottomView();
+		//b.bottomView();
+		//b.DiagonalView();
+		b.invertBT();
 	}
 	
 	public static class Node{
@@ -865,6 +867,47 @@ Input: [5,3,6,2,4,null,8,1,null,null,null,7,9]
 			map.put(i, n.data);
 			recursivebottomView(n.left,i-1);
 			recursivebottomView(n.right,i+1);
+		}
+		LinkedList l = new LinkedList();
+		
+		/* Diagonal traversal with recursion  also have solution with queue*/
+		
+		private void DiagonalView(){
+			int arr[] = Arrayutil.createArray();
+			Node n = convertarraytotree(arr);
+			recursiveDiagonalView(n,0);
+			System.out.println(map);
+		}
+		private void recursiveDiagonalView( Node n,int dia) {
+			// TODO Auto-generated method stub
+			if(map.containsKey(dia)){
+				l = (LinkedList) map.get(dia);
+			}else{
+				l = new LinkedList();
+			}
+			if(n == null){
+				return;
+			}
+			l.add(n.data);
+			map.put(dia, l);
+			recursiveDiagonalView(n.left,dia+1);
+			recursiveDiagonalView(n.right, dia);
+		}
+		private void invertBT(){
+			int arr[] = Arrayutil.createArray();
+			Node n = convertarraytotree(arr);
+			n = recursiveinvertBST(n);
+			printTree(n, 1);
+		}
+		private Node recursiveinvertBST(Node n) {
+			// TODO Auto-generated method stub
+			if(n == null){
+				return null;
+			}
+			Node temp = n.left;
+			n.left = recursiveinvertBST(n.right);
+			n.right = recursiveinvertBST(temp);
+			return n;
 		}
 }
  
