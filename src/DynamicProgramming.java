@@ -9,7 +9,8 @@ public class DynamicProgramming {
 		//dp.minCostClimbingStairs();
 		//dp.maxrodcutting();
 		//dp.Longestpallindromicsubsequence();
-		dp.minDistance();
+		//dp.minDistance();
+		dp.LCS();
 	}
 
 	private static void LongestPallindromeSubsequence() {
@@ -126,4 +127,27 @@ public class DynamicProgramming {
         }
         System.out.println(dp[m][n]);
     }
+	/*https://www.geeksforgeeks.org/longest-common-subsequence-dp-4/	 */
+	public void LCS(){
+		String fString = Stringutil.createString();
+		String secString = Stringutil.createString();
+		int l1 = fString.length();
+		int l2 = secString.length();
+		int dp[][] = new int[l1+1][l2+1];
+		for(int i=0;i<=l1;i++){
+			for(int j=0;j<=l2;j++){
+				if(i==0||j==0){
+					dp[i][j] = 0;
+				}
+				else{
+					if(fString.charAt(i-1) == secString.charAt(j-1) ){
+						dp[i][j] = 1+dp[i-1][j-1];
+					}else{
+						dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+					}
+				}
+			}
+		}
+		System.out.println(dp[l1][l2]);
+	}
 }
