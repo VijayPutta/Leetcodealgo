@@ -34,4 +34,13 @@ public class Arrayutil {
 		list.add(arr);
 		return list;
 	}
+	public static void printArray(int[][] dp, int length, int capacity) {
+		// TODO Auto-generated method stub
+		for(int i=0;i<=length;i++){
+			for(int j=0;j<=capacity;j++){
+				System.out.println(dp[i][j]);
+			}
+			System.out.println("\n");
+		}
+	}
 }
