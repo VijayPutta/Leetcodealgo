@@ -31,7 +31,9 @@ public class DynamicProgramming {
 		//noofbinarystringswithoutconsones();
 		//noofpathsinmazebfs();
 		//noofpaths();
-		dp.subsetequaltozero();
+		//dp.subsetequaltozero();
+		//dp.maxproductsubarray();
+		dp.minNoofJUMPS();
         long end = System.currentTimeMillis();
         System.out.println((end - start) + " ms");
 	}
@@ -470,7 +472,50 @@ public class DynamicProgramming {
 	public void subarrayequaltozero(){
 		int arr[] = Arrayutil.createArray();
 		int length = arr.length;
+	}
+	public void maxproductsubarray(){
+		int A[] = Arrayutil.createArray();
+		int length = A.length;
+		if (A.length == 0)  {
+			System.out.println(0);
+		}
+		   int max = A[0], min = A[0], totalMax = A[0];
+		   for (int i = 1; i < A.length; i++) {
+		       int tempMax = A[i] * max;
+		       int tempMin = A[i] * min;
+		       max = Math.max(Math.max(tempMax,tempMin), A[i]);
+		       min = Math.min(Math.min(tempMax,tempMin), A[i]);
+		       totalMax = Math.max(totalMax, max);
+		   }
+		 System.out.println(totalMax);
 		
 	}
-	public void 
+	public void minNoofJUMPS(){
+		int A[] = Arrayutil.createArray();
+		int length = A.length;
+		if (A.length == 0)  {
+			System.out.println(0);
+		}
+		int dp[] =new int[length];
+		int acJump[] =new int[length];
+		dp[0] = 0;
+		for(int i=1;i<length;i++){
+			for(int j=0;j<i;j++ ){
+				if(A[j]+j >= i){
+					if(dp[i] == 0){
+						dp[i] = dp[j]+1;
+						acJump[i] = j;
+					}else{
+						if(dp[i]>dp[j]+1){
+							acJump[i] = j;
+						}
+						dp[i] = Math.min(dp[i],dp[j]+1);
+					}
+				}
+			}
+		}
+		Arrayutil.printArray(dp);
+		Arrayutil.printArray(acJump);
+		System.out.println(dp[length-1]);
+	}
 }
