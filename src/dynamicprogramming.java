@@ -7,11 +7,11 @@ import java.util.Queue;
 
 
 
-public class DynamicProgramming {
+public class dynamicprogramming {
 	public static void main(String[] args){
 		long start = System.currentTimeMillis();
 //		LongestPallindromeSubsequence("agbdba");
-		DynamicProgramming dp = new DynamicProgramming();
+		dynamicprogramming dp = new dynamicprogramming();
 //		String str = "agbdba";
 //        int r1 = calculateRecursive(str.toCharArray(), 0, str.length());
 //        System.out.println(r1);
