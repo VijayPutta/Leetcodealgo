@@ -82,6 +82,36 @@ public class Graphs {
 			}
 		}
 	}
+	public static void isCycle(graph g){
+		boolean visited[] = new boolean[g.v];
+		boolean recstack[] = new boolean[g.v];
+		for(int i=0;i<g.v;i++){
+			if(visited[i] == false){
+				if(recursiveCycleDFS(g,i,visited,recstack)){
+					System.out.println("true");
+				}else{
+					System.out.println("false");
+				}
+			}
+		}
+	}
+	public static boolean recursiveCycleDFS(graph g, int n, boolean[] visited, boolean[] recstack) {
+		// TODO Auto-generated method stub
+		if(recstack[n]){
+			return true;
+		}
+		if(visited[n]){
+			return false;
+		}
+		recstack[n] = visited[n] = true;
+		for(int i=0;i<g.adjList[n].size();i++){
+			if(recursiveCycleDFS(g,g.adjList[n].get(i),visited,recstack)){
+				return true;
+			}
+		}
+		recstack[n] = false;
+		return false;
+	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		graph g = new graph(5);
@@ -94,7 +124,15 @@ public class Graphs {
 		//printAdjencyList(g);
 		//BFS(g,0);
 		//DFS(g,0);
-		recursiveDFS(g,0);
+		//recursiveDFS(g,0);
+		graph g1 = new graph(5);
+		adddirectedEdge(g1, 0, 1);
+		adddirectedEdge(g1, 1, 2);
+		adddirectedEdge(g1, 2, 3);
+		adddirectedEdge(g1, 3, 4);
+		//adddirectedEdge(g1, 4, 1);
+		//adddirectedEdge(g, 3, 4);
+		isCycle(g1);
 	}
 
 }
