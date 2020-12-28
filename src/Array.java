@@ -27,12 +27,7 @@ public class Array {
 		}
 		System.out.println(max);
 	}
-	private static void searchrotatedsortedarray(){
-		int k = Arrayutil.getNumber();
-		int[] arr = new int[k];
-		int target = Arrayutil.getNumber();
-		
-	}
+	
 	private static boolean binarySearch(int[] arr,int l,int h,int target){
 		int m = (l+h)/2;
 		if(l<h){
@@ -210,4 +205,22 @@ public class Array {
         }
         return num[lo];
     }
+	
+	// Microsoft prep
+	/* Print the matrix in spiral form 
+	 * https://www.geeksforgeeks.org/print-a-given-matrix-in-spiral-form/
+	 
+	 * Input:  1    2   3   4
+        5    6   7   8
+        9   10  11  12
+        13  14  15  16
+		Output: 1 2 3 4 8 12 16 15 14 13 9 5 6 7 11 10 
+		Explanation: The output is matrix in spiral format. 
+		
+		Input:  1   2   3   4  5   6
+		        7   8   9  10  11  12
+		        13  14  15 16  17  18
+		Output: 1 2 3 4 5 6 12 18 17 16 15 14 13 7 8 9 10 11
+		Explanation :The output is matrix in spiral format.
+	 */
 }
