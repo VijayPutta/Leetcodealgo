@@ -7,7 +7,8 @@ public class Array {
 		//mergeSortedarray();
 		//replacewithgreaterelementonrightside();
 		//integerBreak();
-		searchinrotatedarray();
+		//searchinrotatedarray();
+		printSprialForm();
 	}
 
 	private static void getMaximumnofromcards() {
@@ -210,6 +211,11 @@ public class Array {
 	/* Print the matrix in spiral form 
 	 * https://www.geeksforgeeks.org/print-a-given-matrix-in-spiral-form/
 	 
+	 The problem can be solved by dividing the matrix into loops or squares or boundaries. 
+	 It can be seen that the elements of the outer loop are printed first in a clockwise manner then the elements of the inner loop is printed. 
+	 So printing the elements of a loop can be solved using four loops which prints all the elements. 
+	 Every ‘for’ loop defines a single direction movement along with the matrix. 
+	 The first for loop represents the movement from left to right, whereas the second crawl represents the movement from top to bottom, the third represents the movement from the right to left, and the fourth represents the movement from bottom to up.
 	 * Input:  1    2   3   4
         5    6   7   8
         9   10  11  12
@@ -223,4 +229,33 @@ public class Array {
 		Output: 1 2 3 4 5 6 12 18 17 16 15 14 13 7 8 9 10 11
 		Explanation :The output is matrix in spiral format.
 	 */
+	public static void printSprialForm() {
+		int[][] arr = Arrayutil.createtwodimesionalArray();
+		int k=0, h=0;
+		int m = arr.length;
+		int n = arr[0].length;
+		while(k<m && h<n) {
+			for(int i=h;i<n;i++) {
+				System.out.println(arr[k][i]);
+			}
+			k++;
+			for(int i=k;i<n;i++) {
+				System.out.println(arr[i][n-1]);
+			}
+			n--;
+			if(k<m) {
+				for(int i=n-1;i>=h;i--) {
+					System.out.println(arr[m-1][i]);
+				}
+				m--;
+			}
+			if(h<n) {
+				for(int i=m-1;i>=k;i--) {
+					System.out.println(arr[i][h]);
+				}
+				h++;
+			}
+		}
+		//Arrayutil.printtwodimesionalArray(arr);
+	}
 }

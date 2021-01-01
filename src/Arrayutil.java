@@ -43,4 +43,29 @@ public class Arrayutil {
 			System.out.println("\n");
 		}
 	}
+	public static int[][] createtwodimesionalArray(){
+		Scanner sc = new Scanner(System.in);
+		System.out.println("enter no of rows");
+		int n = sc.nextInt();
+		System.out.println("enter no of columns");
+		int m = sc.nextInt();
+		int[][] arr = new int[n][m];
+		for(int i=0;i<n;i++) {
+			for(int j=0;j<m;j++) {
+				arr[i][j] = sc.nextInt();
+			}
+		}
+		return arr;
+	}
+	public static int[][] printtwodimesionalArray(int[][] arr){
+		int n = arr.length;
+		int m = arr[0].length;
+		for(int i=0;i<n;i++) {
+			for(int j=0;j<m;j++) {
+				System.out.println(arr[i][j]);
+			}
+			System.out.println("\n");
+		}
+		return arr;
+	}
 }

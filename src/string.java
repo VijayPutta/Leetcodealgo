@@ -1,5 +1,6 @@
 import java.awt.Dimension;
 import java.awt.List;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -27,7 +28,8 @@ public class string {
 		//thesmallestString();
 		//removeAdjacentDuplicate();
 		//removeAdjacentDuplicate2();
-		permutationsofthestring();
+		//permutationsofthestring();
+		printanagramstogether();
 	}
 	
 	
@@ -389,8 +391,8 @@ public class string {
 		int[] arr = new int[26];
 		for(int i=0;i<s.length();i++){
 			arr[s.charAt(i)-'a']++;
-		}
-		for(int i=0;i<t.length();i++){
+		} 
+		 for(int i=0;i<t.length();i++){
 			arr[t.charAt(i)-'a']--;
 		}
 		int ans=0;
@@ -476,4 +478,61 @@ public class string {
         }
         System.out.println(new String(res, 0, i));
 	}
+	
+	/* Microsoft practise
+	 * Given an array of words, print all anagrams together. 
+	 * For example, if the given array is {“cat”, “dog”, “tac”, “god”, “act”}, then output may be “cat tac act dog god”.
+	
+	 * 
+	 * A simple method is to create a Hash Table. 
+	 * Calculate the hash value of each word in such a way that all anagrams have the same hash value.
+	 * Populate the Hash Table with these hash values. 
+	 * Finally, print those words together with same hash values. 
+	 * A simple hashing mechanism can be modulo sum of all characters. 
+	 * With modulo sum, two non-anagram words may have same hash value. This can be handled by matching individual characters.
+
+		Following is another method to print all anagrams together. 
+		Take two auxiliary arrays, index array and word array. 
+		Populate the word array with the given sequence of words. 
+		Sort each individual word of the word array. 
+		Finally, sort the word array and keep track of the corresponding indices. 
+		After sorting, all the anagrams cluster together. 
+		Use the index array to print the strings from the original array of strings.
+	 */
+	public static void printanagramstogether() {
+		int num = Stringutil.getNumber();
+		String[] strList = Stringutil.arraySting(num);
+		
+		HashMap<Character,Integer> tempMap ;
+		HashMap<HashMap<Character,Integer>,ArrayList<String>> map = new HashMap<HashMap<Character,Integer>,ArrayList<String>>();
+		ArrayList<String> strings;
+		for(int i=0;i<strList.length;i++) {
+			System.out.println(i);
+			String str = strList[i];
+			tempMap = new HashMap<Character,Integer>();
+			for(int j=0;j<str.length();j++) {
+				if(tempMap.containsKey(str.charAt(j))) {
+					int x =  tempMap.get(str.charAt(j));
+					tempMap.put(str.charAt(j), x+1);
+				}else {
+					tempMap.put(str.charAt(j), 1);
+				}
+			}
+			if(map.containsKey(tempMap)) {
+				 strings = map.get(tempMap);
+				strings.add(str);
+				map.put(tempMap,strings);
+			}else {
+				strings = new ArrayList();
+				strings.add(str);
+				map.put(tempMap,strings);
+			}
+		}
+		ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
+		for(HashMap<Character,Integer> temp :map.keySet()) {
+			result.add(map.get(temp));
+		}
+		System.out.println(result);
+	}
+	
 }
