@@ -10,7 +10,9 @@ import java.util.Queue;
 public class dynamicprogramming {
 	public static void main(String[] args){
 		long start = System.currentTimeMillis();
-//		LongestPallindromeSubsequence("agbdba");
+		//LongestPallindromeSubsequence("agbdba");
+		//LongestPallindromeSubstring("forgeeksskeegfor");
+		LargestRectangleInHistogram();
 		dynamicprogramming dp = new dynamicprogramming();
 //		String str = "agbdba";
 //        int r1 = calculateRecursive(str.toCharArray(), 0, str.length());
@@ -33,7 +35,7 @@ public class dynamicprogramming {
 		//noofpaths();
 		//dp.subsetequaltozero();
 		//dp.maxproductsubarray();
-		dp.minNoofJUMPS();
+//		dp.minNoofJUMPS();
         long end = System.currentTimeMillis();
         System.out.println((end - start) + " ms");
 	}
@@ -56,24 +58,77 @@ public class dynamicprogramming {
 		// TODO Auto-generated method stub
 		
 		char[] str = str1.toCharArray();
-	        int T[][] = new int[str.length][str.length];
-	        for(int i=0; i < str.length; i++){
+		System.out.println(str);
+	        int T[][] = new int[str1.length()][str1.length()];
+	        for(int i=0; i < str1.length(); i++){
 	            T[i][i] = 1;
 	        }
-	        for(int l = 2; l <= str.length; l++){
-	            for(int i = 0; i < str.length-l + 1; i++){
-	                int j = i + l - 1;
-	                if(l == 2 && str[i] == str[j]){
-	                    T[i][j] = 2;
-	                }else if(str[i] == str[j]){
-	                    T[i][j] = T[i + 1][j-1] + 2;
-	                }else{
-	                    T[i][j] = Math.max(T[i + 1][j], T[i][j - 1]);
-	                }
-	            }
+	        for(int i=2;i<=str1.length();i++) {
+	        	for(int j=0;j<str1.length()-i+1;j++) {
+	        		int k = j+i-1;
+	        			if(i == 0 && j == 4) {
+	        				System.out.println(str1.charAt(i));
+	        	        	System.out.println(str1.charAt(j));
+	        			}
+        	        	
+
+	        			if(str1.charAt(j) == str1.charAt(k) ) {
+
+	        				T[j][k] = 2 + T[j+1][k-1];
+	        			}
+	        			else {
+	        	        //	System.out.println(i+"sahdjh"+j);
+	        				
+	        				T[j][k] = Math.max(T[j+1][k],T[j][k-1]);
+	        			}
+	        		
+	        	}
 	        }
+	        for(int i=0;i<T.length;i++) {
+	        	for(int j=0;j<T.length;j++) {
+		        	System.out.print(T[i][j]+" ");
+		        }
+	        	System.out.println();
+	        }
+	        //Arrayutil.printtwodimesionalArray(T);
 	        System.out.println(T[0][str.length-1]);
 	}
+	
+	private static void LongestPallindromeSubstring(String str1) {
+		// TODO Auto-generated method stub
+		
+		char[] str = str1.toCharArray();
+		System.out.println(str);
+	        int T[][] = new int[str1.length()][str1.length()];
+	        for(int i=0; i < str1.length(); i++){
+	            T[i][i] = 1;
+	        }
+	        for(int i=2;i<=str1.length();i++) {
+	        	for(int j=0;j<str1.length()-i+1;j++) {
+	        		int k = j+i-1;
+	        			
+	        			if(str1.charAt(j) == str1.charAt(k) ) {
+
+	        				T[j][k] = 2 + T[j+1][k-1];
+	        			}
+	        			else {
+	        	        //	System.out.println(i+"sahdjh"+j);
+	        				
+	        				T[j][k] = 0;
+	        			}
+	        		
+	        	}
+	        }
+	        for(int i=0;i<T.length;i++) {
+	        	for(int j=0;j<T.length;j++) {
+		        	System.out.print(T[i][j]+" ");
+		        }
+	        	System.out.println();
+	        }
+	        //Arrayutil.printtwodimesionalArray(T);
+	        System.out.println(T[0][str.length-1]);
+	}
+	
 	public static int calculateRecursive(char str[],int start,int len){
         if(len == 1){
             return 1;
@@ -517,5 +572,8 @@ public class dynamicprogramming {
 		Arrayutil.printArray(dp);
 		Arrayutil.printArray(acJump);
 		System.out.println(dp[length-1]);
+	}
+	public static void LargestRectangleInHistogram() {
+		
 	}
 }
