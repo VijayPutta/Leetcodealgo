@@ -9,24 +9,27 @@ import java.util.Queue;
 
 public class dynamicprogramming {
 	public static void main(String[] args){
-		long start = System.currentTimeMillis();
 		//LongestPallindromeSubsequence("agbdba");
 		//LongestPallindromeSubstring("forgeeksskeegfor");
-		LargestRectangleInHistogram();
+		//maxHistogram();
+		//bestTimetosellstock();
+		//bestTimetosellstock1();
 		dynamicprogramming dp = new dynamicprogramming();
-//		String str = "agbdba";
-//        int r1 = calculateRecursive(str.toCharArray(), 0, str.length());
-//        System.out.println(r1);
+		//String str = "agbdba";
+        //int r1 = calculateRecursive(str.toCharArray(), 0, str.length());
+        //System.out.println(r1);
 		//dp.noofclimbingsteps();
 		//dp.minCostClimbingStairs();
 		//dp.maxrodcutting();
 		//dp.Longestpallindromicsubsequence();
 		//dp.minDistance();
+		//dp.minDistanceRecursive();
 		//dp.LCS();
 		//dp.LCSubstring();
 		//dp.LongestIncreasingsubsequence();
 		//dp.greedyKnapsack();
 		//dp.knapsackproblem01();
+		dp.recursiveknapsackproblem01();
 		//dp.maxsubarray();
 		//dp.maxslidingwindow();
 		//houserobber();
@@ -35,13 +38,16 @@ public class dynamicprogramming {
 		//noofpaths();
 		//dp.subsetequaltozero();
 		//dp.maxproductsubarray();
-//		dp.minNoofJUMPS();
-        long end = System.currentTimeMillis();
-        System.out.println((end - start) + " ms");
+		//dp.minNoofJUMPS();
 	}
 
 	
 	
+
+
+	
+
+
 
 
 	public static class pair{
@@ -185,29 +191,7 @@ public class dynamicprogramming {
 		}
 		System.out.println(t[price.length]);
 	}
-	public void Longestpallindromicsubsequence(){
-		String s = Stringutil.createString();
-		int t[][] = new int[s.length()+1][s.length()+1];
-		for(int i=0;i<=s.length();i++){
-			for(int j=0;j<=s.length();j++){
-				if(i==j){
-					t[i][j] = 1;
-				}
-			}
-		}
-		for(int i=2;i<=s.length();i++){
-			for(int j=i+1;j<=s.length();j++){
-				if(i>j){
-					 if(s.charAt(i)==s.charAt(j)){
-						 t[i][j] = t[i+1][j-1] + 2;
-					 }else{
-						 t[i][j] = Math.max(t[i-1][j], t[i][j-1]);
-					 }
-				}
-			}
-		}
-		System.out.println(t[0][s.length()]);
-	}
+
 	
 	public void minDistance() {
 		String word1 = Stringutil.createString();
@@ -233,6 +217,28 @@ public class dynamicprogramming {
         }
         System.out.println(dp[m][n]);
     }
+	public void minDistanceRecursive() {
+		String word1 = Stringutil.createString();
+		String word2 = Stringutil.createString();
+		
+		int m = word1.length();
+		int n = word2.length();
+		System.out.println(recursiveMinDistance(word1,word2,m-1,n-1));
+	}
+	public int recursiveMinDistance(String str, String str2, int m,int n) {
+		if(m == 0) {
+			return n;
+		}
+		if(n==0) {
+			return m;
+		}
+		if(str.charAt(m) == str2.charAt(n)) {
+			return recursiveMinDistance(str,str2,m-1,n-1);
+		}
+		else {
+			return 1 + Math.min(Math.min(recursiveMinDistance(str, str2,m-1,n),recursiveMinDistance(str,str2,m,n-1)),recursiveMinDistance(str,str2,m-1,n-1));
+		}
+	}
 	
 	/*https://www.geeksforgeeks.org/longest-common-subsequence-dp-4/	 */
 	public void LCS(){
@@ -392,6 +398,27 @@ public class dynamicprogramming {
   
         System.out.println(K[n][W]); 
 	}
+	public void recursiveknapsackproblem01() {
+		int wt[] = Arrayutil.createArray();
+		int val[] = Arrayutil.createArray();
+		int n = wt.length;
+		int W = Arrayutil.getNumber();
+		
+		int maxweight = recursiveKNP(wt,val,n,W);
+		System.out.println(maxweight);
+	}
+	private int recursiveKNP(int[] wt, int[] val, int n, int w) {
+		// TODO Auto-generated method stub
+		if(n == 0 || w == 0) {
+			return 0;
+		}
+		if(wt[n-1] > w) {
+			return recursiveKNP(wt,val,n-1,w);
+		}else {
+			return Math.max(val[n-1]+recursiveKNP(wt,val,n-1,w-wt[n-1]), recursiveKNP(wt,val,n-1,w));
+		}
+	}
+
 	public void maxsubarray(){
 		int arr[] = Arrayutil.createArray();
 		int length = arr.length;
@@ -573,7 +600,79 @@ public class dynamicprogramming {
 		Arrayutil.printArray(acJump);
 		System.out.println(dp[length-1]);
 	}
-	public static void LargestRectangleInHistogram() {
+	public static int maxHistogram(){
+		int input[] = Arrayutil.createArray();
+        Deque<Integer> stack = new LinkedList<Integer>();
+        int maxArea = 0;
+        int area = 0;
+        int i;
+        for(i=0; i < input.length;){
+            if(stack.isEmpty() || input[stack.peekFirst()] <= input[i]){
+                stack.offerFirst(i++);
+            }else{
+                int top = stack.pollFirst();
+                //if stack is empty means everything till i has to be
+                //greater or equal to input[top] so get area by
+                //input[top] * i;
+                if(stack.isEmpty()){
+                    area = input[top] * i;
+                }
+                //if stack is not empty then everythin from i-1 to input.peek() + 1
+                //has to be greater or equal to input[top]
+                //so area = input[top]*(i - stack.peek() - 1);
+                else{
+                    area = input[top] * (i - stack.peekFirst() - 1);
+                }
+                if(area > maxArea){
+                    maxArea = area;
+                }
+            }
+        }
+        while(!stack.isEmpty()){
+            int top = stack.pollFirst();
+            //if stack is empty means everything till i has to be
+            //greater or equal to input[top] so get area by
+            //input[top] * i;
+            if(stack.isEmpty()){
+                area = input[top] * i;
+            }
+            //if stack is not empty then everything from i-1 to input.peek() + 1
+            //has to be greater or equal to input[top]
+            //so area = input[top]*(i - stack.peek() - 1);
+            else{
+                area = input[top] * (i - stack.peekFirst() - 1);
+            }
+        if(area > maxArea){
+                maxArea = area;
+            }
+        }
+        System.out.println(maxArea);
+        return maxArea;
+    }
+	public static void bestTimetosellstock() {
+		int arr[] = Arrayutil.createArray();
+		int minprice = Integer.MAX_VALUE,maxprofit=0;
+		for(int i=0;i<arr.length;i++) {
+			if(arr[i]<minprice) {
+				minprice = arr[i];
+			}
+			if(arr[i]-minprice > maxprofit) {
+				maxprofit = arr[i]-minprice;
+			}
+		}
+		System.out.print(maxprofit);
 		
 	}
+	private static void bestTimetosellstock1() {
+		// TODO Auto-generated method stub
+		int arr[] = Arrayutil.createArray();
+		int profit=0;
+		for(int i=1;i<arr.length;i++) {
+			if(arr[i]>arr[i-1]) {
+				profit+= arr[i]-arr[i-1];
+			}
+		}
+		System.out.println(profit);
+	}
+
 }
