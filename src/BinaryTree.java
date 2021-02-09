@@ -1,4 +1,11 @@
 import java.util.*;
+/*
+ *  1 Distance between two nodes
+ *  2 Top view, bottom view , right view and left view
+ *  3 Diameter of the tree
+ *  4 Covert pre - order BT to post - order Bt
+ *  5 convert binary tree to DLL
+ */
 public class BinaryTree {
 	int max = 0;
 	Node root;
@@ -10,7 +17,7 @@ public class BinaryTree {
 		//twoTreeIdenticalSequence();
 		//trimTheNodes();
 		BinaryTree b = new BinaryTree();
-//		b.Diameterofthetree();
+	//	b.Diameterofthetree();
 		//convertBsttoGreatertree();
 		//b.treetilt();
 		//b.printSecondMinNode();
@@ -37,9 +44,9 @@ public class BinaryTree {
 		//b.topView();
 		//b.bottomView();
 		//b.DiagonalView();
-		b.invertBT();
+		//b.invertBT();
+		//b.houseRobber3();
 	}
-	
 	public static class Node{
 		int data;
 		Node left,right;
@@ -53,6 +60,69 @@ public class BinaryTree {
 		}
 	}
 	
+	public void houseRobber3() {
+		// TODO Auto-generated method stub
+		int arr[] = Arrayutil.createArray();
+		
+		Node n =  recursiveConvertarraytoBST(arr, 0, arr.length-1);
+		printTree(n,2);
+		
+		System.out.println("1 for recursive and 2 for memorization");
+		int ch = Arrayutil.getNumber();
+		
+		if(ch == 1) {
+			int val = recursivehouseRobber3(n,"robbed");
+			System.out.println(val);
+		}else if(ch == 2) {
+			int val = hourseRobberWithmemorization(n);
+			System.out.println(val);
+		}
+	}
+	
+	public int recursivehouseRobber3(Node n, String string) {
+		if(n == null) {
+			return 0;
+		}
+		// TODO Auto-generated method stub
+		if(string == "robbed") {
+			return Math.max(n.data+recursivehouseRobber3(n.left,"notrobbed")+recursivehouseRobber3(n.right, "notrobbed"),
+					recursivehouseRobber3(n.left, "robbed")+recursivehouseRobber3(n.right, "robbed"));
+		}else {
+			return recursivehouseRobber3(n.left,"robbed")+recursivehouseRobber3(n.right,"robbed");
+		}
+	}
+	public Node recursiveConvertarraytoBST(int[] arr,int l,int h) {
+		// TODO Auto-generated method stub
+		if(l>h){
+			return null;
+		}
+		int m = (l+h)/2;
+		Node n = new Node(arr[m]);
+		n.left = recursiveConvertarraytoBST(arr,l,m-1);
+		n.right = recursiveConvertarraytoBST(arr,m+1,h);
+		return n;
+	}
+	HashMap<Integer,Integer> mapNode = new HashMap<Integer,Integer>();
+	private int hourseRobberWithmemorization(Node n) {
+		// TODO Auto-generated method stub
+		if(n == null) {
+			return 0;
+		}
+		if(map.containsKey(n)) {
+			return (int) map.get(n);
+		}
+		int total = n.data;
+		
+		if(n.left != null) {
+			total += hourseRobberWithmemorization(n.left.left)+hourseRobberWithmemorization(n.left.right);
+		}
+		if(n.right != null) {
+			total += hourseRobberWithmemorization(n.right.left)+hourseRobberWithmemorization(n.right.right);
+		}
+		int profit = Math.max(total, hourseRobberWithmemorization(n.left)+hourseRobberWithmemorization(n.right));
+		map.put(n,profit);
+		return profit;
+	}
 	/*Leetcode problem which is incompletely done	 */
 	private static void reachthenumberwithminsteps() {
 		// TODO Auto-generated method stub
@@ -406,17 +476,7 @@ public class BinaryTree {
 	    	printTree(_n,1);
 	    }
 	    
-		private Node recursiveConvertarraytoBST(int[] arr,int l,int h) {
-			// TODO Auto-generated method stub
-			if(l>h){
-				return null;
-			}
-			int m = (l+h)/2;
-			Node n = new Node(arr[m]);
-			n.left = recursiveConvertarraytoBST(arr,l,m-1);
-			n.right = recursiveConvertarraytoBST(arr,m+1,h);
-			return n;
-		}
+		
 		int xdepth = 0,ydepth = 0;
 		Node xNode = null,yNode = null;
 		public void getTheCousins(){
@@ -659,7 +719,7 @@ Input: [5,3,6,2,4,null,8,1,null,null,null,7,9]
 			if(left != null && right != null){
                 return parent;
             }
-             if(left != null && right != null){
+             if(left == null && right == null){
                 return null;
             }
 			if(left == null){
